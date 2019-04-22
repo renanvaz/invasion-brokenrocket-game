@@ -1,0 +1,25 @@
+@charset 'utf-8';
+
+@import '_variables';
+@import '_reset';
+@import '_fonts';
+
+@import (less, optional) '../../.tmp/jpg-sprite.css';
+@import (less, optional) '../../.tmp/png-sprite.css';
+
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+    @import (less, optional) '../../.tmp/jpg-sprite@2x.css';
+    @import (less, optional) '../../.tmp/png-sprite@2x.css';
+}
+
+// Type your css for pages here
+
+.device {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    border-radius: 360px;
+    margin: 50px auto;
+    background-color: black;
+    overflow: hidden;
+}

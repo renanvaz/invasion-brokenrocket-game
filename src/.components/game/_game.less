@@ -1,0 +1,35 @@
+/**
+ * You are inside the CSS selector of your component
+ *
+ * Try to add CSS properties direct below, inside of the "&" selector, eg:
+ */
+
+& {
+    [class^="screen-"] {
+        position: absolute 0;
+        display: none;
+        color: #FFF;
+
+        &.screen-playing {
+            display: block;
+
+            .player {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 35px;
+                height: 29px;
+                background: url(../images/ete-2.png) 0 0 no-repeat;
+            }
+
+            .gate {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 50px;
+                height: 100px;
+                background-color: red;
+            }
+        }
+    }
+}

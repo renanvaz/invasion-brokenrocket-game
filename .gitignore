@@ -1,0 +1,18 @@
+node_modules
+.tmp
+.vscode
+
+# build
+_AUX/*
+!.gitkeep
+
+**/*.map
+
+# OSX Files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows image file caches
+Thumbs.db
