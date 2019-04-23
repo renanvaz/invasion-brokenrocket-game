@@ -7,6 +7,8 @@
 
 const elScreenPlaying = el.querySelector('.screen-playing');
 
+const elPlayer = el.querySelector('.player');
+
 const gravity = 400;
 
 let score = 0;
@@ -14,16 +16,16 @@ let score = 0;
 const coordsToCSS = (x = 0, y = 0) => `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
 
 const Game = {
-    _x: 0,
-    _lastGateId: 0,
-    _distanceToNewGate: 100,
+    _distanceToNewEnemy: 100,
     _distanceDefault: 100,
     _distancePadding: 30,
+
+    x: 0,
 
     checkForColisions() {
         let hasColision = false;
 
-        Gate._items.forEach((item) => {
+        Enemy._items.forEach((item) => {
             if (Player.x < item.x + item.width &&
                 Player.x + Player.width > item.x &&
                 Player.y < item.y + item.height &&
@@ -39,17 +41,17 @@ const Game = {
 
     tick(dt) {
         Player.process(dt);
-        Gate.process(dt);
+        Enemy.process(dt);
 
-        if (this._x > this._distanceToNewGate) {
-            Gate.create();
+        if (this.x > this._distanceToNewEnemy) {
+            Enemy.create();
 
-            this._distanceToNewGate = this._x + this._distanceDefault + this._distancePadding - (Math.random() * (this._distancePadding * 2));
+            this._distanceToNewEnemy = this.x + this._distanceDefault + this._distancePadding - (Math.random() * (this._distancePadding * 2));
         }
 
         Bg.render(dt);
         Player.render(dt);
-        Gate.render(dt);
+        Enemy.render(dt);
 
         if (this.checkForColisions()) {
             Ticker.pause();
@@ -62,12 +64,12 @@ const Game = {
 };
 
 const Player = {
-    el: el.querySelector('.player'),
+    el: elPlayer,
 
-    width: 35,
-    height: 29,
+    width: elPlayer.clientWidth,
+    height: elPlayer.clientHeight,
     x: 80,
-    y: Math.round(wW / 2),
+    y: Math.round(wH / 2),
     velocity: {
         x: 100,
         y: -200,
@@ -77,7 +79,7 @@ const Player = {
         this.velocity.y += (gravity * dt);
         this.y += this.velocity.y * dt;
 
-        Game._x += this.velocity.x * dt;
+        Game.x += this.velocity.x * dt;
     },
 
     render() {
@@ -85,49 +87,32 @@ const Player = {
     },
 };
 
-
-const Bg = {
-    el: el.querySelector('.background'),
-    ceiling: el.querySelector('.background .ceiling'),
-    floor: el.querySelector('.background .floor'),
-    mountain1: el.querySelector('.background .mountain-1'),
-    mountain2: el.querySelector('.background .mountain-2'),
-
-    process(dt) {
-
-    },
-
-    render() {
-        this.ceiling.style.backgroundPosition   = `left -${Game._x % wW}px top 0`;
-        this.floor.style.backgroundPosition     = `left -${Game._x % wW}px bottom 0`;
-        this.mountain1.style.backgroundPosition = `left -${Game._x * .5 % wW}px bottom 70px`;
-        this.mountain2.style.backgroundPosition = `left -${Game._x * .8 % wW}px bottom 0`;
-    },
-};
-
-const Gate = {
+const Enemy = {
     _items: new Set,
 
     create() {
         const domEl = document.createElement('div');
-        domEl.classList.add('gate');
+        const model = Math.round(Math.random() * 2) + 1;
+
+        domEl.classList.add(`asteroid-${model}`);
+
         elScreenPlaying.appendChild(domEl);
 
-        const gate = {
+        const enemy = {
             el: domEl,
 
-            width: 36,
-            height: 36,
+            width: domEl.clientWidth,
+            height: domEl.clientHeight,
             x: wW,
-            y: Math.random() * (wH - 36),
+            y: (Math.random() * (wH - 30 - 30 - 10 - 10)) + 30 + 10,
 
             destroy() {
                 elScreenPlaying.removeChild(this.el);
-                Gate._items.delete(this);
+                Enemy._items.delete(this);
             }
         };
 
-        this._items.add(gate);
+        this._items.add(enemy);
     },
 
     process(dt) {
@@ -147,11 +132,33 @@ const Gate = {
     },
 };
 
+const Bg = {
+    el: el.querySelector('.background'),
+    // ceiling: el.querySelector('.background .ceiling'),
+    // floor: el.querySelector('.background .floor'),
+    // mountain1: el.querySelector('.background .mountain-1'),
+    // mountain2: el.querySelector('.background .mountain-2'),
+    clouds: el.querySelector('.background .clouds'),
+    clouds2: el.querySelector('.background .clouds-2'),
+
+    process(dt) {
+
+    },
+
+    render() {
+        // this.ceiling.style.backgroundPosition   = `left -${Game.x}px top 0`;
+        // this.floor.style.backgroundPosition     = `left -${Game.x}px bottom 0`;
+        // this.mountain1.style.backgroundPosition = `left -${Game.x * .2}px bottom 70px`;
+        // this.mountain2.style.backgroundPosition = `left -${Game.x * .5}px bottom 0`;
+        this.clouds.style.backgroundPosition    = `left -${Game.x * .3}px top 0`;
+        this.clouds2.style.backgroundPosition    = `left -${Game.x * .5}px top 0`;
+    },
+};
+
 Ticker.add(Game);
 
 const onInput = () => {
     Player.velocity.y = -200;
 };
 
-document.addEventListener('mousedown', onInput);
-document.addEventListener('touchstart', onInput);
+document.addEventListener('ontouchstart' in window ? 'touchstart' : 'mousedown', onInput);
