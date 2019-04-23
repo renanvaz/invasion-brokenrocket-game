@@ -150,8 +150,9 @@ const Bg = {
         // this.floor.style.backgroundPosition     = `left -${Game.x}px bottom 0`;
         // this.mountain1.style.backgroundPosition = `left -${Game.x * .2}px bottom 70px`;
         // this.mountain2.style.backgroundPosition = `left -${Game.x * .5}px bottom 0`;
-        this.clouds.style.backgroundPosition    = `left -${Game.x * .3}px top 0`;
-        this.clouds2.style.backgroundPosition    = `left -${Game.x * .5}px top 0`;
+        this.el.style.backgroundPosition    = `left -${Math.round(Game.x * .1)}px top 0`;
+        this.clouds.style.backgroundPosition    = `left -${Math.round(Game.x * .3)}px top 0`;
+        this.clouds2.style.backgroundPosition    = `left -${Math.round(Game.x * .5)}px top 0`;
     },
 };
 
