@@ -16,9 +16,9 @@ let score = 0;
 const coordsToCSS = (x = 0, y = 0) => `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
 
 const Game = {
-    _distanceToNewEnemy: 100,
-    _distanceDefault: 100,
-    _distancePadding: 30,
+    _distanceToNewEnemy: 0,
+    _distanceDefault: 200,
+    _distancePadding: 50,
 
     x: 0,
 
@@ -59,6 +59,8 @@ const Game = {
             score += dt;
 
             console.log('lose', score);
+
+            window.location.reload();
         }
     },
 };
@@ -134,11 +136,10 @@ const Enemy = {
 
 const Bg = {
     el: el.querySelector('.background'),
-    // ceiling: el.querySelector('.background .ceiling'),
-    // floor: el.querySelector('.background .floor'),
-    // mountain1: el.querySelector('.background .mountain-1'),
-    // mountain2: el.querySelector('.background .mountain-2'),
-    clouds: el.querySelector('.background .clouds'),
+    stars1: el.querySelector('.background .stars-1'),
+    stars2: el.querySelector('.background .stars-2'),
+    stars3: el.querySelector('.background .stars-3'),
+    clouds1: el.querySelector('.background .clouds-1'),
     clouds2: el.querySelector('.background .clouds-2'),
 
     process(dt) {
@@ -146,12 +147,10 @@ const Bg = {
     },
 
     render() {
-        // this.ceiling.style.backgroundPosition   = `left -${Game.x}px top 0`;
-        // this.floor.style.backgroundPosition     = `left -${Game.x}px bottom 0`;
-        // this.mountain1.style.backgroundPosition = `left -${Game.x * .2}px bottom 70px`;
-        // this.mountain2.style.backgroundPosition = `left -${Game.x * .5}px bottom 0`;
-        this.el.style.backgroundPosition    = `left -${Math.round(Game.x * .1)}px top 0`;
-        this.clouds.style.backgroundPosition    = `left -${Math.round(Game.x * .3)}px top 0`;
+        this.stars1.style.backgroundPosition    = `left -${Math.round(Game.x * .1)}px top 0`;
+        this.stars2.style.backgroundPosition    = `left -${Math.round(Game.x * .15)}px top 0`;
+        this.stars3.style.backgroundPosition    = `left -${Math.round(Game.x * .2)}px top 0`;
+        this.clouds1.style.backgroundPosition    = `left -${Math.round(Game.x * .3)}px top 0`;
         this.clouds2.style.backgroundPosition    = `left -${Math.round(Game.x * .5)}px top 0`;
     },
 };
