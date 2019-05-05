@@ -6,12 +6,18 @@
 
  @keyframes fade {
     from { opacity: .5; }
-    to   { opacity: 1; }
+    to { opacity: 1; }
 }
 
 @keyframes fire {
     0% { background-position: right top; }
-    50%   { background-position: right bottom; }
+    50% { background-position: right bottom; }
+}
+
+@keyframes explosion {
+    0% { background-position: left top; opacity: 1; }
+    50% { background-position: left bottom; opacity: 1; }
+    100% { background-position: left bottom; opacity: 0; }
 }
 
 @keyframes ete {
@@ -44,35 +50,60 @@
         position: absolute 0;
         display: none;
         color: #FFF;
+        text-align: center;
+
+        &.screen-gameover {
+            background-color: rgba(0, 0, 0, .5);
+            border-radius: 360px;
+            font-size: 36px;
+            z-index: 3;
+
+            h2 {
+                font-size: 42px;
+                margin-top: 35px;
+            }
+
+            button {
+                font-size: 36px;
+            }
+        }
 
         &.screen-playing {
             display: block;
+
+            .score {
+                position: absolute;
+                top: 0;
+                left: 0;
+                font-size: 36px;
+                width: 100%;
+            }
 
             .player {
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 50px;
-                height: 56px;
+                width: 40px;
+                height: 46px;
 
                 .fire {
                     position: absolute;
-                    top: 38px;
-                    left: -18px;
-                    width: 26px;
-                    height: 16px;
+                    top: 32px;
+                    left: -16px;
+                    width: 22px;
+                    height: 12px;
                     background: url(../images/sprite-fire.png) 0 0 no-repeat;
                     background-size: cover;
 
-                    animation: fire .4s step-end forwards infinite;
+                    animation: fire .3s step-end forwards infinite;
                 }
 
                 .nav {
                     position: absolute;
                     top: 0;
                     left: 0;
-                    width: 50px;
-                    height: 56px;
+                    width: 40px;
+                    height: 46px;
                     background: url(../images/sprite-ete.png) 0 0 no-repeat;
                     background-size: cover;
 
@@ -80,12 +111,26 @@
                 }
             }
 
+            .explosion {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 66px;
+                height: 52px;
+                background: url(../images/sprite-explosion.png) 0 0 no-repeat;
+                background-size: cover;
+
+                &.explode {
+                    animation: explosion .4s steps(2, end) 0s forwards;
+                }
+            }
+
             .asteroid-1 {
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 32px;
-                height: 32px;
+                width: 46px;
+                height: 48px;
                 background: url(../images/asteroid-1.png) no-repeat;
                 background-size: cover;
             }
@@ -94,8 +139,8 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 32px;
-                height: 32px;
+                width: 46px;
+                height: 48px;
                 background: url(../images/asteroid-2.png) no-repeat;
                 background-size: cover;
             }
@@ -104,9 +149,10 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 32px;
-                height: 32px;
+                width: 48px;
+                height: 39px;
                 background: url(../images/asteroid-3.png) no-repeat;
+                background-size: cover;
             }
 
             .background {
@@ -118,32 +164,22 @@
                 background-color: #000;
 
                 .stars-1 {
+                    opacity: .2;
                     position: absolute 0;
                     background: url(../images/stars-1.png) left top;
-                    animation: fade 2s linear 0s alternate infinite;
                 }
 
                 .stars-2 {
+                    opacity: .5;
                     position: absolute 0;
                     background: url(../images/stars-2.png) left top;
-                    animation: fade 1s linear .5s alternate infinite;
                 }
 
                 .stars-3 {
                     position: absolute 0;
                     background: url(../images/stars-3.png) left top;
-                    animation: fade 3s linear .3s alternate infinite;
+                    // animation: fade 2s linear 0s alternate infinite;
                 }
-
-                // .clouds-1 {
-                //     position: absolute 0;
-                //     background: url(../images/clouds-1.png) left top;
-                // }
-
-                // .clouds-2 {
-                //     position: absolute 0;
-                //     background: url(../images/clouds-2.png) left top;
-                // }
             }
         }
     }
